@@ -17,6 +17,7 @@ import {
     createTextCompleteHandler,
 } from "./lib/hooks"
 import { configureClientAuth, isSecureMode } from "./lib/auth"
+import { startAutoUpdate } from "./lib/update"
 
 const id = "opencode-dynamic-context-pruning"
 
@@ -43,6 +44,8 @@ const server: Plugin = (async (ctx) => {
     logger.info("DCP initialized", {
         strategies: config.strategies,
     })
+
+    startAutoUpdate(ctx, config.autoUpdate)
 
     const compressToolContext = {
         client: ctx.client,
