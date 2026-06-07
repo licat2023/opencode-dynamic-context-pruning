@@ -86,7 +86,7 @@ function analyzeTokens(state: SessionState, messages: WithParts[]): TokenBreakdo
 
     let firstAssistant: AssistantMessage | undefined
     for (const msg of messages) {
-        if (msg.info.role === "assistant") {
+        if (msg.info.role === "assistant" && !isMessageCompacted(state, msg)) {
             const assistantInfo = msg.info as AssistantMessage
             if (
                 assistantInfo.tokens?.input > 0 ||
@@ -102,7 +102,7 @@ function analyzeTokens(state: SessionState, messages: WithParts[]): TokenBreakdo
     let lastAssistant: AssistantMessage | undefined
     for (let i = messages.length - 1; i >= 0; i--) {
         const msg = messages[i]
-        if (msg.info.role === "assistant") {
+        if (msg.info.role === "assistant" && !isMessageCompacted(state, msg)) {
             const assistantInfo = msg.info as AssistantMessage
             if (assistantInfo.tokens?.output > 0) {
                 lastAssistant = assistantInfo
